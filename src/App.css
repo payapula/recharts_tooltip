@@ -1,0 +1,17 @@
+.wrapper {
+  width: 550px;
+  margin: auto;
+  margin-top: 200px;
+}
+
+.wrapper .heading {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.container {
+  border: 1px solid;
+  background: lightblue;
+  max-height: 150px;
+  overflow: auto;
+}
