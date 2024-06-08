@@ -1,7 +1,8 @@
 .wrapper {
   width: 550px;
   margin: auto;
-  margin-top: 200px;
+  border: 1px dashed cadetblue;
+  padding: 8px;
 }
 
 .wrapper .heading {
@@ -11,7 +12,13 @@
 
 .container {
   border: 1px solid;
-  background: lightblue;
   max-height: 150px;
   overflow: auto;
+}
+
+.allWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 100px;
 }

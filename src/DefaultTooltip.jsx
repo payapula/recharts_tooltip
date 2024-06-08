@@ -50,8 +50,11 @@ function Rechart() {
 
 export function DefaultTooltip() {
   return (
-    <div className="container">
-      <Rechart />
+    <div className="wrapper">
+      <p className="heading">Default Tooltip</p>
+      <div className="container">
+        <Rechart />
+      </div>
     </div>
   );
 }

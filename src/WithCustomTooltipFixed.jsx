@@ -54,15 +54,17 @@ function Rechart() {
 
 const CustomTooltip = ({ active, payload, label, coordinate }) => {
   if (active && payload && payload.length) {
+    const left = `${coordinate.x}px`;
+    const top = `${coordinate.y}px`;
     return (
       <Portal portalId="tooltip-portal">
         <div
           className="custom-tooltip"
           style={{
-            left: `${coordinate.x + 100}px`,
-            top: `${coordinate.y}px`,
+            transform: `translate(${left}, ${top})`,
             position: "absolute",
             zIndex: 3,
+            width: "max-content",
           }}
         >
           <p className="label">{`${label} : ${payload[0].value}`}</p>
@@ -78,6 +80,7 @@ const CustomTooltip = ({ active, payload, label, coordinate }) => {
 const RECHARTS_DEFAULT_TOOLTIP_CLASSNAME = ".recharts-tooltip-wrapper";
 
 export function WithCustomTooltipFixed() {
+  const wrapperRef = React.useRef(null);
   const clonedPortalRef = React.useRef(null);
   const chartContainerRef = React.useRef(null);
 
@@ -86,9 +89,8 @@ export function WithCustomTooltipFixed() {
     const clonedPortal = clonedPortalRef.current;
 
     function handleMouseMove() {
-      const defaultRechartsTooltipTargetElement = document.querySelector(
-        RECHARTS_DEFAULT_TOOLTIP_CLASSNAME
-      );
+      const defaultRechartsTooltipTargetElement =
+        wrapperRef.current.querySelector(RECHARTS_DEFAULT_TOOLTIP_CLASSNAME);
       const rect = defaultRechartsTooltipTargetElement?.getBoundingClientRect();
 
       const tooltipTargetPos = Number(rect?.y?.toFixed(0));
@@ -102,19 +104,16 @@ export function WithCustomTooltipFixed() {
   }, []);
 
   return (
-    <div className="wrapper">
-      <p className="heading">Heading for Tooltip</p>
+    <div className="wrapper" ref={wrapperRef}>
+      <p className="heading">Fixed Tooltip</p>
       <div
         id="tooltip-portal"
         ref={clonedPortalRef}
         style={{
           position: "absolute",
-          left: "0px",
           pointerEvents: "none",
         }}
-      >
-        Tooltip portal container
-      </div>
+      ></div>
       <div className="container" ref={chartContainerRef}>
         <Rechart />
       </div>

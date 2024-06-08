@@ -65,8 +65,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 export function WithCustomTooltip() {
   return (
     <div className="wrapper">
-      <p>Heading for Tooltip</p>
-      <div>Tooltip portal container</div>
+      <p className="heading">Custom Tooltip</p>
       <div className="container">
         <Rechart />
       </div>

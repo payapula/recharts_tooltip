@@ -6,9 +6,11 @@ import { WithCustomTooltipFixed } from "./WithCustomTooltipFixed";
 function App() {
   return (
     <>
-      {/* <DefaultTooltip /> */}
-      {/* <WithCustomTooltip /> */}
-      <WithCustomTooltipFixed />
+      <div className="allWrapper">
+        <DefaultTooltip />
+        <WithCustomTooltip />
+        <WithCustomTooltipFixed />
+      </div>
     </>
   );
 }
