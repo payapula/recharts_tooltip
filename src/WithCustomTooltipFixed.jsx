@@ -52,12 +52,14 @@ function Rechart() {
   );
 }
 
+const TOOLTIP_PORAL_ID = "tooltip-portal";
+
 const CustomTooltip = ({ active, payload, label, coordinate }) => {
   if (active && payload && payload.length) {
     const left = `${coordinate.x}px`;
     const top = `${coordinate.y}px`;
     return (
-      <Portal portalId="tooltip-portal">
+      <Portal portalId={TOOLTIP_PORAL_ID}>
         <div
           className="custom-tooltip"
           style={{
@@ -81,21 +83,23 @@ const RECHARTS_DEFAULT_TOOLTIP_CLASSNAME = ".recharts-tooltip-wrapper";
 
 export function WithCustomTooltipFixed() {
   const wrapperRef = React.useRef(null);
-  const clonedPortalRef = React.useRef(null);
+  const portalContainerRef = React.useRef(null);
   const chartContainerRef = React.useRef(null);
 
   React.useEffect(() => {
     const chartWrapper = chartContainerRef.current;
-    const clonedPortal = clonedPortalRef.current;
+    const portalContainer = portalContainerRef.current;
 
+    /**
+     * Whenever user mouses over the chart, we are syncing the position of
+     * `portalContainer` with the `defaultRechartsTooltipTargetElement`.
+     */
     function handleMouseMove() {
       const defaultRechartsTooltipTargetElement =
         wrapperRef.current.querySelector(RECHARTS_DEFAULT_TOOLTIP_CLASSNAME);
       const rect = defaultRechartsTooltipTargetElement?.getBoundingClientRect();
-
       const tooltipTargetPos = Number(rect?.y?.toFixed(0));
-
-      clonedPortal.style.top = `${tooltipTargetPos}px`;
+      portalContainer.style.top = `${tooltipTargetPos}px`;
     }
 
     chartWrapper.addEventListener("mouseover", handleMouseMove);
@@ -107,8 +111,8 @@ export function WithCustomTooltipFixed() {
     <div className="wrapper" ref={wrapperRef}>
       <p className="heading">Fixed Tooltip</p>
       <div
-        id="tooltip-portal"
-        ref={clonedPortalRef}
+        id={TOOLTIP_PORAL_ID}
+        ref={portalContainerRef}
         style={{
           position: "absolute",
           pointerEvents: "none",
